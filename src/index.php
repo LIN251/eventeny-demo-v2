@@ -14,6 +14,8 @@
     <button class="tablink" id="guestLogin" onclick="openTab('login')">Admin Login</button>
     <button class="tablink" onclick="openTab('register')">Admin Register</button>
     <?php
+    error_reporting(E_ALL);
+    ini_set('display_errors', 1);
     include "util/db_setup.php";
     ?>
     <div id="products" class="tabcontent">
