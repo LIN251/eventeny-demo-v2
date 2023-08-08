@@ -1,0 +1,13 @@
+# Managed by Composer
+/bin/*
+/vendor/
+
+# Build data
+/build/
+
+# Composer PHAR
+/composer.lock
+
+
+# Operating system files
+.DS_Store
