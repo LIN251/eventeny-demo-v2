@@ -1,0 +1,17 @@
+{
+    "name": "linz/eventeny",
+    "autoload": {
+        "psr-4": {
+            "Linz\\Eventeny\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "LIN251",
+            "email": "LZ2304@VT.EDU"
+        }
+    ],
+    "require": {
+        "vlucas/phpdotenv": "^5.5"
+    }
+}

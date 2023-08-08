@@ -1,0 +1,262 @@
+body {
+    font-family: "Lato", sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+h1 {
+  text-align: center;
+  margin-bottom: 20px;
+  color: #10bab4;
+}
+
+/* CSS for the login container */
+#login, #register {
+    width: 300px;
+    margin: 150px auto; /* Added margin to move it down */
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    background-color: #f9f9f9;
+}
+
+/* CSS for the form labels */
+#login label, #register label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+    color: #666;
+}
+
+/* CSS for the form input fields */
+#login input[type="text"],
+#login input[type="password"],
+#login input[type="submit"],
+#register input[type="text"],
+#register input[type="password"],
+#register input[type="email"],
+#register input[type="submit"] {
+    width: 80%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+/* CSS for the login button */
+#login input[type="submit"] {
+    background-color: #10bab4;
+    color: white;
+    cursor: pointer;
+}
+
+#login input[type="submit"]:hover {
+    background-color: #0c928e;
+}
+
+/* CSS for the Register button */
+#register form {
+    text-align: center;
+}
+
+#register input[type="submit"] {
+    background-color: #10bab4;
+    color: white;
+    cursor: pointer;
+}
+
+#register input[type="submit"]:hover {
+    background-color: #0c928e;
+}
+
+/* Style the Tabs */
+.tablink {
+  background-color: #555;
+  color: white;
+  float: left;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  padding: 14px 16px;
+  font-size: 17px;
+  width: 33.333%;
+}
+
+.tablink:hover {
+  background-color: #777;
+}
+
+.tabcontent {
+  display: none;
+  padding: 50px;
+  text-align: center;
+}
+
+
+/* CSS for show product container */
+.show-products-container {
+  width: 60%;
+  margin: 50px auto;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  background-color: #fff;
+}
+
+.product {
+  display: flex;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  margin-bottom: 20px;
+  padding: 10px;
+  background-color: #fff;
+  box-shadow: 0 15px 5px rgba(0, 0, 0, 0.1);
+}
+
+
+.product-details {
+    flex: 2;
+}
+
+.product-details h3 {
+  font-size: 18px;
+  margin: 0;
+  margin-bottom: 10px;
+  margin-top: 8px;
+  color: #14ada8;
+}
+
+.product-image {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  border-radius: 8px;
+  overflow: hidden;
+  background-color: #f1f1f1; 
+}
+
+.sellerInfo {
+  color: #17dfd8; 
+  font-weight: bold; 
+}
+
+.no-image {
+  text-align: center;
+  color: black;
+  font-size: 18px;
+  font-weight: bold;
+  padding: 50px;
+}
+
+.product-image img {
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+}
+
+.product-details form {
+  margin-top: 20px;
+}
+
+.product-details input[type="submit"] {
+  background-color: #10bab4;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.product-details input[type="submit"]:hover {
+  background-color: #0c928e;
+}
+
+
+  /* CSS for Purchase product page */
+.form-container {
+    max-width: 400px;
+    margin: 50px auto;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #fff;
+}
+
+.form-title {
+    text-align: center;
+    font-size: 24px;
+    margin-bottom: 20px;
+    color: #10bab4;
+}
+
+h3 {
+  text-align: center;
+  margin-top: 50px;
+}
+
+.form-group {
+    margin-bottom: 20px;
+    justify-content: center;
+    align-items: center;
+}
+
+.form-group label {
+    display: block;
+    font-weight: bold;
+    color: #555;
+    margin-bottom: 5px;
+}
+
+.form-group input {
+    width: 95%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.form-group input[type="submit"] {
+  width: 100%;
+  background-color: #10bab4;
+  color: #fff;
+  cursor: pointer;
+  font-size: 16px;
+  border: none;
+  border-radius: 4px;
+  transition: background-color 0.3s ease;
+}
+
+.form-group input[type="submit"]:hover {
+    background-color: #0c928e;
+}
+
+/* CSS for Process Purchase page */
+.purchase-success {
+  background-color: #f0f0f0;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  padding: 20px;
+  text-align: center;
+  max-width: 500px;
+  margin: 50px auto;
+  font-family: "Arial", sans-serif;
+}
+
+.purchase-success a.back-btn {
+  display: inline-block;
+  background-color: #10bab4;
+  color: #fff;
+  text-decoration: none;
+  padding: 10px 20px;
+  border-radius: 4px;
+  margin-top: 20px;
+}
+
+.purchase-success a.back-btn:hover {
+  background-color: #0c928e;
+}
+
+.discount {
+  color: red;
+}
