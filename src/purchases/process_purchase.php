@@ -57,7 +57,8 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $count = $_POST["count"];
     $buyer_id = $_POST["buyer_id"];
     
-    
+    error_reporting(E_ALL);
+
     // Check the availability of the product and get current product information.
     $availabilityStmt = $conn->prepare("SELECT * FROM products WHERE product_id = ?");
     $availabilityStmt->bind_param("i", $product_id);
@@ -73,7 +74,9 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     // Calculate the discounted price
     $discounted_price = $availabilityRow["price"] * (1 - ($product_discount / 100));
     $product_price = number_format($discounted_price, 2);
+    $execution_price = floatval(str_replace(',', '', $product_price));
     $availabilityStmt->close();
+
 
     if ($availableQuantity == 0) {
         echo "This product is currently out of stock.";
@@ -84,20 +87,29 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $reduceAvailabilityStmt->execute();
         $reduceAvailabilityStmt->close();
 
-     
-        if ($buyer_id == "") { 
+        
+        if ($buyer_id == "") {
             // Prepare and execute the SQL query to insert the purchase into the database
             for ($i = 0; $i < $count; $i++) {
                 $stmt = $conn->prepare("INSERT INTO purchases (seller_id, name, email, address, state, country, postcode, execution_description, execution_discount, execution_price, execution_cost_price ,execution_product_name,product_id) VALUES (?, ?, ?, ?, ?, ?, ?,?,?,?,?,?,?)");
-                $stmt->bind_param("isssssssiiisi", $seller_id, $name, $email, $address, $state, $country, $postcode, $description, $product_discount, $product_price, $cost_price, $product_name, $product_id);
+                $stmt->bind_param("isssssssiiisi", $seller_id, $name, $email, $address, $state, $country, $postcode, $description, $product_discount, $execution_price, $cost_price, $product_name, $product_id);
                 $stmt->execute();
                 $stmt->close();
             }
         }else{
             // Prepare and execute the SQL query to insert the purchase into the database
             for ($i = 0; $i < $count; $i++) {
-                $stmt = $conn->prepare("INSERT INTO purchases (seller_id, name, email, address, state, country, postcode, execution_description, execution_discount, execution_price, execution_cost_price ,execution_product_name, buyer_id,product_id) VALUES (?, ?, ?, ?, ?, ?, ?,?,?,?,?,?,?,?)");
-                $stmt->bind_param("isssssssiiisii", $seller_id, $name, $email, $address, $state, $country, $postcode, $description, $product_discount, $product_price, $cost_price, $product_name,$buyer_id, $product_id );
+                $cur_price = $product_price;
+                $stmt = $conn->prepare("INSERT INTO purchases (
+                    seller_id, name, email, address, state, country, postcode, 
+                    execution_product_name, execution_description, execution_discount, 
+                    execution_price, execution_cost_price, product_id, buyer_id) 
+                    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+                
+                $stmt->bind_param("issssssssdssii", 
+                    $seller_id, $name, $email, $address, $state, $country, $postcode, 
+                    $product_name, $description, $product_discount, $execution_price, 
+                    $cost_price, $product_id, $buyer_id);
                 $stmt->execute();
                 $stmt->close();
             }

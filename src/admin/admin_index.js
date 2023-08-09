@@ -199,7 +199,7 @@ document.querySelectorAll('.tablink').forEach(tab => {
 
 // add function to cancel a purchase
 function cancelPurchase(purchase_id) {
-  if (confirm("Are you sure you want to cancel this purchase?")) {
+  if (confirm("Are you sure you want to cancel this order?")) {
     $.post(
       `../purchases/cancel_purchase.php`,
       { purchase_id: purchase_id },

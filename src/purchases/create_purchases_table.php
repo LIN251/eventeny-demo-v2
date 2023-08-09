@@ -8,7 +8,7 @@ $sql = "CREATE TABLE IF NOT EXISTS purchases (
     execution_product_name VARCHAR(255) NOT NULL,
     execution_description TEXT NOT NULL,
     execution_discount DECIMAL(5, 2) NOT NULL DEFAULT 0,
-    execution_price DECIMAL(10, 2) NOT NULL,
+    execution_price DECIMAL(12, 2) NOT NULL,
     execution_cost_price DECIMAL(10, 2) NOT NULL DEFAULT 0,
     address VARCHAR(255) NOT NULL,
     state VARCHAR(100) NOT NULL,

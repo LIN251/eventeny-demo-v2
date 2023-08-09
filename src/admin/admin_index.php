@@ -65,8 +65,7 @@ if (!isset($_SESSION["user_id"])) {
         ?>
         <div class="add-product">
             <h2>Add New Product</h2>
-            <form action="../products/add_product.php" method="post">
-                <label for="name">Name:</label>
+            <form class="add-product-form" action="../products/add_product.php" method="post">                <label for="name">Name:</label>
                 <input type="text" name="name" required placeholder="Product Name (Required)">
                 <label for="price">Price (Visible to customers):</label>
                 <input type="number" name="price" step="0.01" required placeholder="Product Price (Required)">

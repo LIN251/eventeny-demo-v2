@@ -3,10 +3,9 @@ $user_id = $_SESSION["user_id"];
 // Fetch all products for the current user from the 'product' table
 $sql = "SELECT * FROM purchases WHERE buyer_id = '$user_id' ";
 $result = $conn->query($sql);
-error_reporting(E_ALL);
-ini_set('display_errors', 1);
+
 if ($result->num_rows > 0) {
-    echo '<table class="product-table">';
+    echo '<table class="product-table table">';
     echo '<tr>
             <th>Seller</th>
             <th>Product Name</th>

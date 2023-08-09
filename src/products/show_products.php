@@ -72,7 +72,9 @@ if ($result->num_rows > 0) {
       if (!isset($_SESSION["user_id"])) {
         echo '<input type="submit" value="Purchase As Guest">';
       }else{
-        echo '<input type="submit" value="Purchase">';
+        echo '<div class="purchase-button-container">';
+        echo '<input type="submit" id="purchase" value="Purchase">';
+        echo '</div>';
       }
     
     } else {

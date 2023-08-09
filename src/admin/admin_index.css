@@ -77,11 +77,35 @@ h1, h2{
     margin: 0 auto;
 }
 
+.add-product-form input[type="submit"] {
+  width: 30%; 
+  height: 40px; 
+}
+.add-product-form  input[type="submit"] {
+  background-color: #10bab4;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.add-product-form  input[type="submit"]:hover {
+  background-color: #0c928e;
+}
+
+
 
 form {
-    /* display: grid; */
     grid-template-columns: 1fr 2fr;
     gap: 15px;
+}
+
+.add-product-form {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  gap: 15px;
 }
 
 label {
@@ -92,6 +116,7 @@ label {
     text-align: center; /* Center label text horizontally */
   }
 
+  
 input,
 textarea {
     width: 80%;
@@ -103,7 +128,6 @@ textarea {
     display: flex;
     justify-content: center;
     grid-column: span 2; 
-    /* Make the container span across both columns */
   }
 
 input[type="submit"] {
@@ -287,4 +311,3 @@ input[type="submit"] {
     color: red;
   }
 
-  

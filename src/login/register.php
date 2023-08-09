@@ -28,9 +28,7 @@ function login($username, $password, $conn)
         header("Location: ../admin/admin_index.php");
         exit;
     }
-
 }
-
 
 // Check if the form was submitted
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
@@ -64,5 +62,4 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     // Close the database connection
     $conn->close();
 }
-
 ?>
