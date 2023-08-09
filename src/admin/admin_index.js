@@ -197,5 +197,25 @@ document.querySelectorAll('.tablink').forEach(tab => {
   });
 });
 
+// add function to cancel a purchase
+function cancelPurchase(purchase_id) {
+  if (confirm("Are you sure you want to cancel this purchase?")) {
+    $.post(
+      `../purchases/cancel_purchase.php`,
+      { purchase_id: purchase_id },
+      function (response) {
+        const tr = $(`tr[data-id="${purchase_id}"]`);
+        tr.remove();
+      }
+    )
+      .done(function () {
+        location.reload();
+      })
+      .fail(function () {
+        alert("An error occurred while cancelling the purchase.");
+      });
+  }
+}
+
 // Load the active tab when the page is fully loaded
 window.addEventListener('load', loadActiveTab);

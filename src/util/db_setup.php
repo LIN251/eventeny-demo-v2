@@ -64,7 +64,7 @@ if (!checkTable("products", $conn)) {
     addTestingDataForProducts($conn);
 }
 if (!checkTable("purchases", $conn)) {
-    require_once "products/create_purchases_table.php";
+    require_once "purchases/create_purchases_table.php";
 }
 
 ?>

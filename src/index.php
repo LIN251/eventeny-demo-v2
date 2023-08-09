@@ -11,11 +11,10 @@
 <body>
     <h1>Marketplace</h1>
     <button class="tablink" onclick="openTab('products')" id="defaultOpen">All Products</button>
-    <button class="tablink" id="guestLogin" onclick="openTab('login')">Admin Login</button>
-    <button class="tablink" onclick="openTab('register')">Admin Register</button>
+    <button class="tablink" id="defaultOpen" onclick="openTab('login')">User Login</button>
+    <button class="tablink" id="guestregister" onclick="openTab('register')">User Register</button>
     <?php
-    error_reporting(E_ALL);
-    ini_set('display_errors', 1);
+
     include "util/db_setup.php";
     ?>
     <div id="products" class="tabcontent">
@@ -42,9 +41,9 @@
         </form>
 
         <!-- Add a Register button that redirects to the registration page -->
-        <form action="./login/register.php">
+        <!-- <form action="./login/register.php">
             <input type="submit" value="Register">
-        </form>
+        </form> -->
     </div>
 
     <div id="register" class="tabcontent">

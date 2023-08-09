@@ -43,19 +43,19 @@
 <body>
     <div class="form-container">
         <h1 class="form-title">Shopping Cart</h1>
-        <form action="process_purchase.php" method="post"
+        <form action="../purchases/process_purchase.php" method="post"
             onsubmit="return validateForm(<?php echo $_POST['available']; ?>)">
             <h3>Product Information</h3>
             <div class="form-group">
                 <?php
                 $available = $_POST['available'];
+                $buyer_id = $_POST['buyer_id'];
                 $product_name = $_POST['name'];
                 $product_price = $_POST['price'];
                 $product_description = $_POST['description'];
                 $product_return_policy = $_POST['return_policy'];
                 $product_image = $_POST['image'];
                 $product_discount = $_POST['discount'];
-
                 // Display the product information
                 echo '<h4>Product: ' . $product_name . '</h4>';
                 if ($product_discount == 0) {
@@ -69,6 +69,7 @@
                 echo '<p>Return Policy: ' . $product_return_policy . '</p>';
                 echo '<p>Image: </p>';
                 echo '<img src="' . $product_image . '" alt="Product Image" style="width: 140px;">';
+  
                 ?>
                 <p for="count">Purchase Count:</p>
                 <input type="number" name="count" id="count" value="1" required>
@@ -119,6 +120,8 @@
             <input type="hidden" id="available" value="<?php echo $_POST['available']; ?>">
             <input type="hidden" name="product_id" value="<?php echo $_POST['product_id']; ?>">
             <input type="hidden" name="user_id" value="<?php echo $_POST['user_id']; ?>">
+            <input type="hidden" name="buyer_id" value="<?php echo $buyer_id; ?>">
+         
             <div class="form-group">
                 <input type="submit" value="Submit Purchase" class="submit-btn">
             </div>

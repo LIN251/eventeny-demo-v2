@@ -2,7 +2,6 @@
 // Fetch all products from the 'products' table
 $sql = "SELECT * FROM products WHERE archive = '0'";
 $result = $conn->query($sql);
-
 function findUserData($user_id, $conn)
 {
   $userSql = "SELECT * FROM users WHERE user_id = '$user_id'";
@@ -18,6 +17,13 @@ function findUserData($user_id, $conn)
 
 if ($result->num_rows > 0) {
   while ($row = $result->fetch_assoc()) {
+    $buyer_id = "";
+    if (isset($_SESSION["user_id"])) {
+      $buyer_id = $_SESSION["user_id"];
+      if($row["user_id"] == $_SESSION["user_id"]){
+        continue;
+      }
+    }
     // Calculate the discounted price
     $discount = $row["discount"];
     $discounted_price = $row["price"] * (1 - ($discount / 100));
@@ -39,7 +45,7 @@ if ($result->num_rows > 0) {
     if ($discount == 0) {
       echo '<p>Price: $' . $row["price"] . '</p>';
     } else {
-      echo '<p><del>$' . $row["price"] . '</del> <a class="discount">(' . $discount . '% off)</a> -> <strong>Now: $' . $formatted_discounted_price . '</strong></p>';
+      echo '<p><del>$' . $row["price"] . '</del> <a class="discountColor">(' . $discount . '% off)</a> -> <strong>Now: $' . $formatted_discounted_price . '</strong></p>';
       echo '<p >Description: ' . $row["description"] . '</p>';
     }
 
@@ -48,7 +54,11 @@ if ($result->num_rows > 0) {
     echo '<p class="sellerInfo">Seller: ' . $user_data["username"] . '</p>';
     echo '<p class="sellerInfo">Contact Info: <a href="mailto:' . $user_data["email"] . '">' . $user_data["email"] . '</a></p>';
     if ($row["available"] > 0) {
-      echo '<form action="./products/purchase_product.php" method="post">';
+      if (!isset($_SESSION["user_id"])) {
+        echo '<form action="products/purchase_product.php" method="post">';
+      }else{
+        echo '<form action="../products/purchase_product.php" method="post">';
+      }
       echo '<input type="hidden" name="product_id" value="' . $row["product_id"] . '">';
       echo '<input type="hidden" name="user_id" value="' . $row["user_id"] . '">';
       echo '<input type="hidden" name="available" value="' . $row["available"] . '">';
@@ -57,14 +67,19 @@ if ($result->num_rows > 0) {
       echo '<input type="hidden" name="description" value="' . $row["description"] . '">';
       echo '<input type="hidden" name="return_policy" value="' . $row["return_policy"] . '">';
       echo '<input type="hidden" name="image" value="' . $imageURL . '">';
+      echo '<input type="hidden" name="buyer_id" value="' . $buyer_id . '">';
       echo '<input type="hidden" name="discount" value="' . $discount . '">';
-      echo '<input type="submit" value="Purchase As Guest">';
-      echo '</form>';
+      if (!isset($_SESSION["user_id"])) {
+        echo '<input type="submit" value="Purchase As Guest">';
+      }else{
+        echo '<input type="submit" value="Purchase">';
+      }
+    
     } else {
-      echo '<form action="./products/purchase_product.php" method="post">';
       echo '<input style="background-color: grey;" type="submit" value="Out of Stock" disabled>';
-      echo '</form>';
+
     }
+    echo '</form>';
     echo '</div>';
     echo '</div>';
   }
@@ -72,6 +87,5 @@ if ($result->num_rows > 0) {
   echo '<p>No products are on sale.</p>';
 }
 
-// Close the database connection
-$conn->close();
+
 ?>

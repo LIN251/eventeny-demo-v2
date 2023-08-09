@@ -2,6 +2,8 @@
 // Create the 'purchases' table if it doesn't exist
 $sql = "CREATE TABLE IF NOT EXISTS purchases (
     purchase_id INT(11) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    product_id INT(11) UNSIGNED NOT NULL DEFAULT 0,
+    buyer_id INT(11) UNSIGNED NOT NULL DEFAULT 0,
     seller_id INT(11) UNSIGNED NOT NULL,
     execution_product_name VARCHAR(255) NOT NULL,
     execution_description TEXT NOT NULL,

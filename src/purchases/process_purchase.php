@@ -55,7 +55,9 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $country = $_POST["country"];
     $postcode = $_POST["postcode"];
     $count = $_POST["count"];
-
+    $buyer_id = $_POST["buyer_id"];
+    
+    
     // Check the availability of the product and get current product information.
     $availabilityStmt = $conn->prepare("SELECT * FROM products WHERE product_id = ?");
     $availabilityStmt->bind_param("i", $product_id);
@@ -67,6 +69,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $cost_price = $availabilityRow["cost_price"];
     $description = $availabilityRow["description"];
     $product_discount = $availabilityRow["discount"];
+    $product_id = $availabilityRow["product_id"];
     // Calculate the discounted price
     $discounted_price = $availabilityRow["price"] * (1 - ($product_discount / 100));
     $product_price = number_format($discounted_price, 2);
@@ -81,12 +84,23 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $reduceAvailabilityStmt->execute();
         $reduceAvailabilityStmt->close();
 
-        // Prepare and execute the SQL query to insert the purchase into the database
-        for ($i = 0; $i < $count; $i++) {
-            $stmt = $conn->prepare("INSERT INTO purchases (seller_id, name, email, address, state, country, postcode, execution_description, execution_discount, execution_price, execution_cost_price ,execution_product_name) VALUES (?, ?, ?, ?, ?, ?, ?,?,?,?,?,?)");
-            $stmt->bind_param("isssssssiiis", $seller_id, $name, $email, $address, $state, $country, $postcode, $description, $product_discount, $product_price, $cost_price, $product_name);
-            $stmt->execute();
-            $stmt->close();
+     
+        if ($buyer_id == "") { 
+            // Prepare and execute the SQL query to insert the purchase into the database
+            for ($i = 0; $i < $count; $i++) {
+                $stmt = $conn->prepare("INSERT INTO purchases (seller_id, name, email, address, state, country, postcode, execution_description, execution_discount, execution_price, execution_cost_price ,execution_product_name,product_id) VALUES (?, ?, ?, ?, ?, ?, ?,?,?,?,?,?,?)");
+                $stmt->bind_param("isssssssiiisi", $seller_id, $name, $email, $address, $state, $country, $postcode, $description, $product_discount, $product_price, $cost_price, $product_name, $product_id);
+                $stmt->execute();
+                $stmt->close();
+            }
+        }else{
+            // Prepare and execute the SQL query to insert the purchase into the database
+            for ($i = 0; $i < $count; $i++) {
+                $stmt = $conn->prepare("INSERT INTO purchases (seller_id, name, email, address, state, country, postcode, execution_description, execution_discount, execution_price, execution_cost_price ,execution_product_name, buyer_id,product_id) VALUES (?, ?, ?, ?, ?, ?, ?,?,?,?,?,?,?,?)");
+                $stmt->bind_param("isssssssiiisii", $seller_id, $name, $email, $address, $state, $country, $postcode, $description, $product_discount, $product_price, $cost_price, $product_name,$buyer_id, $product_id );
+                $stmt->execute();
+                $stmt->close();
+            }
         }
 
         echo '<link rel="stylesheet" href="../styles.css">';
@@ -101,9 +115,15 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         echo "<br>";
         echo "<br>";
         echo "<br>";
-        echo '<a href="../index.php" class="back-btn">Back to Home</a>';
-        echo '</div>';
-        confirmPurchase($name, $email, $product_name, $product_price, $count, $product_price * $count, $address, $state, $country, $postcode, $conn);
+        
+        if ($buyer_id != "") { 
+            echo '<a href="../admin/admin_index.php" class="back-btn">Back to Purchases</a>';
+        }else{
+            echo '<a href="../index.php" class="back-btn">Back to Home</a>';
+        }
+ 
+        $total = floatval($product_price) * $count;
+        confirmPurchase($name, $email, $product_name, $product_price, $count, $total, $address, $state, $country, $postcode, $conn);
     }
 
     // Close the database connection

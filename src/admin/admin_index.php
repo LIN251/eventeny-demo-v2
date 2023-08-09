@@ -22,12 +22,38 @@ if (!isset($_SESSION["user_id"])) {
     <h1>Welcome,
         <?php echo $_SESSION["username"]; ?>!
     </h1>
-    <button class="tablink" onclick="openTab('manage')" id="defaultOpen">Manage products</button>
+    <button class="tablink" onclick="openTab('products')" id="defaultOpen">On sell Products</button>
+    <button class="tablink" onclick="openTab('orderHistory')" id="orderHistoryTab">Order History</button>
+    <button class="tablink" onclick="openTab('manage')" id="manageTab">Manage Your Products</button>
     <button class="tablink" onclick="openTab('sold')" id="soldTab">Sold Products</button>
     <button class="tablink" onclick="openTab('archive')" id="archiveTab">Archived Templates</button>
     <button class="tablink" onclick="logout()">Log Out</button>
 
+    <!-- Products tab -->
+    <div id="products" class="tabcontent">
+        <div class="show-products-container">
+            <h1 class="form-title">Products On Sale From Other Sellers</h1>
+            <div class="products-container">
+                <?php
+                // Include the database connection code
+                require_once "../util/db_connection.php";
+                include "../products/show_products.php";
+                ?>
+            </div>
+        </div>
+    </div>
 
+
+    
+    <!-- Manage Order History tab -->
+    <div id="orderHistory" class="tabcontent">
+        <h1>Order History</h1>
+        <?php
+        include "../purchases/purchase_history.php";
+        ?>
+    </div>
+
+    
     <!-- Manage products tab -->
     <div id="manage" class="tabcontent">
         <h2>Manage products</h2>
@@ -71,11 +97,9 @@ if (!isset($_SESSION["user_id"])) {
         <?php
         include "../products/sold_products.php";
         ?>
-
-
     </div>
 
-    <!-- Sold products tab -->
+    <!-- archive products tab -->
     <div id="archive" class="tabcontent">
         <h1>Archived Products</h1>
         <?php
