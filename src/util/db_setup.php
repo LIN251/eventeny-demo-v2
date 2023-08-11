@@ -67,4 +67,8 @@ if (!checkTable("purchases", $conn)) {
     require_once "create_purchases_table.php";
 }
 
+if (!checkTable("product_reviews", $conn)) {
+    require_once "create_product_reviews_table.php";
+}
+
 ?>

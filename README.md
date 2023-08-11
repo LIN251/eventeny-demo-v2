@@ -83,12 +83,16 @@ This is a simple marketplace website where users can buy and sell products. Belo
 20. **Cancel Order**
 
 21. **Personalized Product List** 
+
+22. **Allow Purchase Review** 
+
+23. **Purchase Review Management** 
     
 ---
 
 ## Database Schema
 
-![Database Schema](https://raw.githubusercontent.com/LIN251/eventeny-demo/master/img/DemoDatabaseSchemaV2.png)
+![Database Schema](https://raw.githubusercontent.com/LIN251/eventeny-demo/master/img/DemoDatabaseSchemaV3.png)
 
 1. **Automatic Table Creation**: The application automatically creates necessary SQL tables (users, products, purchases) if they do not already exist.
 

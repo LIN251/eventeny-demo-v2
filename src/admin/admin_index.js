@@ -218,5 +218,11 @@ function cancelPurchase(purchase_id) {
   }
 }
 
+// Show the review form
+function showReviewForm(purchaseId){
+  document.getElementById("reviewFormContainer").style.display = "block";
+  document.getElementById("purchaseId").value = purchaseId;
+}
+
 // Load the active tab when the page is fully loaded
 window.addEventListener('load', loadActiveTab);

@@ -67,6 +67,14 @@ function findAllArchivedProductsForUser($conn, $user_id, $archive)
     return $conn->query($sql);
 }
 
+function findReviewByPurchaseId($conn, $purchase_id){
+    $sql = "SELECT * FROM product_reviews WHERE purchase_id = ?";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("i", $purchase_id);
+    $stmt->execute();
+    return $stmt->get_result();
+}
+
 // INSERT
 function insertIntoProducts($conn, $name, $price, $description, $image, $available, $return_policy, $user_id, $cost_price, $discount)
 {
@@ -118,6 +126,13 @@ function insertIntoPurchasesForGuestUser($conn, $seller_id, $name, $email, $addr
     $stmt->close();
 }
 
+function insertIntoProductReviews( $conn, $purchase_id, $user_id, $review_text, $rating){
+    $sql = "INSERT INTO product_reviews (purchase_id, user_id, review_text, rating) VALUES (?, ?, ?, ?)";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("iisi", $purchase_id, $user_id, $review_text, $rating);
+    $stmt->execute();
+    $stmt->close();
+}
 
 // DELETE
 function deleteProduct($conn, $product_id)
@@ -197,5 +212,13 @@ function updateProductSoldAndAvailableForPurchase($conn, $product_id, $count)
     $updateProductStmt->bind_param("iii", $count, $count, $product_id);
     $updateProductStmt->execute();
     $updateProductStmt->close();
+}
+
+function updateReviewSubmitted( $conn, $purchase_id){
+    $sql = "UPDATE purchases SET review_submitted = 1 WHERE purchase_id = ?";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("i", $purchase_id);
+    $stmt->execute();
+    $stmt->close();
 }
 ?>

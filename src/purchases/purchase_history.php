@@ -1,7 +1,8 @@
 <?php
 // include "../util/db_operations.php";
 include "../util/db_connection.php";
-$result = findPurchasesByBuyerId($conn, $_SESSION["user_id"]);
+$user_id = $_SESSION["user_id"];
+$result = findPurchasesByBuyerId($conn, $user_id );
 
 if ($result->num_rows > 0) {
     echo '<table class="product-table table">';
@@ -18,6 +19,7 @@ if ($result->num_rows > 0) {
             <th> Order At</th>
             <th>Updated At</th>
             <th>Request to Cancel Order</th>
+            <th>Add Review</th>
             </tr>';
 
     while ($row = $result->fetch_assoc()) {
@@ -38,12 +40,36 @@ if ($result->num_rows > 0) {
         echo '<td class="updated_at">' . $row["updated_at"] . '</td>';
         if ($row["shipped"] == 1) {
             echo '<td>Item already shipped</td>';
+            if($row["review_submitted"] == 1){
+                echo '<td>Thank you <br>for reviewing.</td>';
+            }else{
+                echo '<td><button onclick="showReviewForm(' . $row["purchase_id"] . ')">Add Review</button></td>';
+            }
         } else {
             echo '<td><button onclick="cancelPurchase(' . $row["purchase_id"] . ')">Request</button></td>';
+            echo '<td>Waiting to deliver</td>';
         }
         echo '</tr>';
     }
     echo '</table>';
+
+
+    // <!-- hidden form for adding reviews -->
+    echo "<div class='add-product' id='reviewFormContainer' style='display: none;'>";
+    echo "<h2>Add Review</h2>";
+    echo "<form class='add-product-form' action='../productReviews/add_product_review.php' method='post'> ";
+    echo "<input type='hidden' name='purchase_id' id='purchaseId' value=''>";
+    echo "<input type='hidden' name='user_id' value='" . $user_id . "'>"; 
+    echo "<label for='review_text'>Review Text:</label>";
+    echo "<input type='text' name='review_text' required placeholder='Add your review (Required)'>";
+    echo "<label for='rating'>Rating:</label>";
+    echo "<input type='number' name='rating' step='0.1' min='0' max='5' required placeholder='Rate the product (0-5 stars)'>";
+    echo "<div class='center-container'>";
+    echo "<input type='submit' value='Add Review'>";
+    echo "</div>";
+    echo "</form>";
+    echo "</div>";
+
 } else {
     echo '<p>No products found.</p>';
 }
