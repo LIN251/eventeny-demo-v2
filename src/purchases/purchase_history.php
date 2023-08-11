@@ -1,8 +1,7 @@
 <?php
-$user_id = $_SESSION["user_id"];
-// Fetch all products for the current user from the 'product' table
-$sql = "SELECT * FROM purchases WHERE buyer_id = '$user_id' ";
-$result = $conn->query($sql);
+// include "../util/db_operations.php";
+include "../util/db_connection.php";
+$result = findPurchasesByBuyerId($conn, $_SESSION["user_id"]);
 
 if ($result->num_rows > 0) {
     echo '<table class="product-table table">';
@@ -22,14 +21,9 @@ if ($result->num_rows > 0) {
             </tr>';
 
     while ($row = $result->fetch_assoc()) {
-        $sellerStmt = $conn->prepare("SELECT * FROM users WHERE user_id = ?");
-        $sellerStmt->bind_param("i", $row["seller_id"]);
-        $sellerStmt->execute();
-        $sellerStmtResult = $sellerStmt->get_result();
+        $sellerStmtResult = findUserByUserId($conn, $row["seller_id"]);
         $sellerRow = $sellerStmtResult->fetch_assoc();
         $seller = $sellerRow["username"];
-
-
         echo '<tr data-id="' . $row["purchase_id"] . '">';
         echo '<td class="name">' . $seller . '</td>';
         echo '<td class="execution_product_name">' . $row["execution_product_name"] . '</td>';
@@ -42,8 +36,8 @@ if ($result->num_rows > 0) {
         echo '<td class="email">' . $row["email"] . '</td>';
         echo '<td class="created_at">' . $row["created_at"] . '</td>';
         echo '<td class="updated_at">' . $row["updated_at"] . '</td>';
-        if ( $row["shipped"] == 1) {
-            echo '<td>Item already shipped.</td>';
+        if ($row["shipped"] == 1) {
+            echo '<td>Item already shipped</td>';
         } else {
             echo '<td><button onclick="cancelPurchase(' . $row["purchase_id"] . ')">Request</button></td>';
         }

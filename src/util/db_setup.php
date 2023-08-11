@@ -56,15 +56,15 @@ function addTestingDataForProducts($conn)
 }
 
 if (!checkTable("users", $conn)) {
-    require_once "users/create_users_table.php";
+    require_once "create_users_table.php";
     addTestingDataForUsers($conn);
 }
 if (!checkTable("products", $conn)) {
-    require_once "products/create_products_table.php";
+    require_once "create_products_table.php";
     addTestingDataForProducts($conn);
 }
 if (!checkTable("purchases", $conn)) {
-    require_once "purchases/create_purchases_table.php";
+    require_once "create_purchases_table.php";
 }
 
 ?>

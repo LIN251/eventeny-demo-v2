@@ -1,21 +1,18 @@
 <?php
-$user_id = $_SESSION["user_id"];
+include "../util/db_connection.php";
 // Fetch all products for the current user from the 'product' table
-$sql = "SELECT * FROM products WHERE user_id = '$user_id' AND archive = 1";
-$result = $conn->query($sql);
+$result = findAllArchivedProductsForUser($conn, $_SESSION["user_id"], 1);
 
 if ($result->num_rows > 0) {
     echo '<table class="product-table">';
     echo '<tr><th>Name</th><th>Image</th><th>Description</th><th>Original Price($)</th><th>Discount<br>(0-100)%</th><th>Discounted Price($)</th><th>Product Cost($)</th><th>Available</th><th>Return Policy</th><th>Sold</th><th>Shipped</th><th>Edit</th><th>Back to Market</th><th>Delete</th></tr>';
     while ($row = $result->fetch_assoc()) {
         // Calculate the discounted price
-        $discount = $row["discount"];
-        $discounted_price = $row["price"] * (1 - ($discount / 100));
-        $formatted_discounted_price = number_format($discounted_price, 2);
+        $formatted_discounted_price = calculateDiscountedPrice($row["price"], $row["discount"]);
 
+        // archived table
         echo '<tr data-id="' . $row["product_id"] . '">';
         echo '<td class="editable name">' . $row["name"] . '</td>';
-        // Check if the image is empty
         if (!empty($row["image"])) {
             echo '<td><img src="' . $row["image"] . '" alt="Product Image" style="max-width: 50%;"></td>';
         } else {

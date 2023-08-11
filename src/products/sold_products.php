@@ -1,11 +1,6 @@
 <?php
-// Fetch all products that belong to the current user
-$user_id = $_SESSION["user_id"];
-$sql = "SELECT * FROM purchases WHERE seller_id = ?";
-$stmt = $conn->prepare($sql);
-$stmt->bind_param("i", $user_id);
-$stmt->execute();
-$result_sold = $stmt->get_result();
+$seller_id = $_SESSION["user_id"];
+$result_sold = findPurchasesBySellerId($conn, $seller_id);
 
 // Initialize the total earnings variable
 $total_earnings = 0;

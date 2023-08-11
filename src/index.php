@@ -14,7 +14,6 @@
     <button class="tablink" id="defaultOpen" onclick="openTab('login')">User Login</button>
     <button class="tablink" id="guestregister" onclick="openTab('register')">User Register</button>
     <?php
-
     include "util/db_setup.php";
     ?>
     <div id="products" class="tabcontent">
@@ -24,7 +23,7 @@
                 <?php
                 // Include the database connection code
                 require_once "util/db_connection.php";
-                include "products/show_products.php";
+                include "products/show_products_guest.php";
                 ?>
             </div>
         </div>

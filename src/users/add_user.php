@@ -1,5 +1,5 @@
 <?php
+include "../util/db_operations.php";
 // Insert the new user into the database
-$sql = "INSERT INTO users (username, password, email) VALUES ('$username', '$hashedPassword', '$email')";
-$conn->query($sql);
+insertIntoUsers( $conn, $username, $hashedPassword, $email);
 ?>

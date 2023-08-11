@@ -78,8 +78,9 @@ function saveProduct(id) {
     alert("Invalid discount. Discount must be a number between 0 and 100.");
     return;
   }
-
+  console.log(data,id);
   $.post(`../products/update_product.php?id=${id}`, data, function (response) {
+    console.log(response);
     tr.find(".editable").each(function () {
       const input = $(this).find("input");
       const value = input.val();
@@ -103,7 +104,7 @@ function saveProduct(id) {
     });
     tr.find(".edit-btn").text("Edit").attr("onclick", `editProduct(${id})`);
   }).done(function () {
-    location.reload();
+    // location.reload();
   });
 }
 

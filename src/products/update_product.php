@@ -1,5 +1,4 @@
 <?php
-// Include the database connection code
 require_once "../util/db_connection.php";
 
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
@@ -14,17 +13,8 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $cost_price = $_POST["cost_price"];
     $discount = $_POST["discount"];
 
-    // Prepare the SQL statement to update the product record
-    $sql = "UPDATE products 
-            SET name = ?, price = ?, available = ?, description = ?, return_policy = ? , cost_price=?, discount=?
-            WHERE product_id = ?";
-
-    $stmt = $conn->prepare($sql);
-    $stmt->bind_param("siissiii", $name, $price, $available, $description, $return_policy, $cost_price, $discount, $id);
-    $stmt->execute();
-    $stmt->close();
+    include "../util/db_operations.php";
+    updateProduct($conn, $id, $name, $price, $available, $description, $return_policy, $cost_price, $discount);
 }
-
-// Close the database connection
 $conn->close();
 ?>

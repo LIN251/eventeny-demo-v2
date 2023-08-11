@@ -23,7 +23,6 @@
             }
         }
 
-
         function validateForm(available) {
             let countInput = document.getElementById("count");
             let count = parseInt(countInput.value);
@@ -35,8 +34,6 @@
             }
             return true;
         }
-
-
     </script>
 </head>
 
@@ -63,13 +60,11 @@
                 } else {
                     echo '<p>Price: $' . $product_price . ' <a class="discount">(After ' . $product_discount . '% Off)<a></p>';
                 }
-                // echo '<p>Price: $' . $product_price . ' <a class="discount">(After ' . $product_discount . '% Off)<a></p>';
                 echo '<p>Description: ' . $product_description . '</p>';
                 echo '<p>Available: ' . $available . '</p>';
                 echo '<p>Return Policy: ' . $product_return_policy . '</p>';
                 echo '<p>Image: </p>';
                 echo '<img src="' . $product_image . '" alt="Product Image" style="width: 140px;">';
-  
                 ?>
                 <p for="count">Purchase Count:</p>
                 <input type="number" name="count" id="count" value="1" required>
@@ -121,7 +116,7 @@
             <input type="hidden" name="product_id" value="<?php echo $_POST['product_id']; ?>">
             <input type="hidden" name="user_id" value="<?php echo $_POST['user_id']; ?>">
             <input type="hidden" name="buyer_id" value="<?php echo $buyer_id; ?>">
-         
+
             <div class="form-group">
                 <input type="submit" value="Submit Purchase" class="submit-btn">
             </div>

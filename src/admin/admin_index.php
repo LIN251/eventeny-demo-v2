@@ -13,7 +13,6 @@ if (!isset($_SESSION["user_id"])) {
 <head>
     <title>Manage Products</title>
     <link rel="stylesheet" href="admin_index.css">
-
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="admin_index.js" defer></script>
 </head>
@@ -35,16 +34,14 @@ if (!isset($_SESSION["user_id"])) {
             <h1 class="form-title">Products On Sale From Other Sellers</h1>
             <div class="products-container">
                 <?php
-                // Include the database connection code
-                require_once "../util/db_connection.php";
-                include "../products/show_products.php";
+                require "../products/show_products_user.php";
                 ?>
             </div>
         </div>
     </div>
 
 
-    
+
     <!-- Manage Order History tab -->
     <div id="orderHistory" class="tabcontent">
         <h1>Order History</h1>
@@ -53,19 +50,21 @@ if (!isset($_SESSION["user_id"])) {
         ?>
     </div>
 
-    
+
     <!-- Manage products tab -->
     <div id="manage" class="tabcontent">
         <h2>Manage products</h2>
-
         <?php
+        error_reporting(E_ALL);
+        ini_set('display_errors', 1);
         // Include the database connection code
-        require_once "../util/db_connection.php";
+        require "../util/db_connection.php";
         include "../products/mamage_products.php";
         ?>
         <div class="add-product">
             <h2>Add New Product</h2>
-            <form class="add-product-form" action="../products/add_product.php" method="post">                <label for="name">Name:</label>
+            <form class="add-product-form" action="../products/add_product.php" method="post"> <label
+                    for="name">Name:</label>
                 <input type="text" name="name" required placeholder="Product Name (Required)">
                 <label for="price">Price (Visible to customers):</label>
                 <input type="number" name="price" step="0.01" required placeholder="Product Price (Required)">
